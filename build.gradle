@@ -1,0 +1,49 @@
+plugins {
+    id "java"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "com.diffplug.spotless" version "5.7.0"
+}
+
+////////////////////////////
+// Configurations Section //
+////////////////////////////
+group = "com.justinyan"
+version = "0.1"
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+// Formatting linter
+spotless {
+    java {
+        googleJavaFormat()
+    }
+}
+
+//////////////////////////
+// Dependencies Section //
+//////////////////////////
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    def version
+    compile "io.vavr:vavr:0.10.3"
+    compile "io.dropwizard:dropwizard-core:2.0.15"
+
+    version = "1.18.16"
+    compileOnly "org.projectlombok:lombok:${version}"
+    annotationProcessor "org.projectlombok:lombok:${version}"
+    testCompileOnly "org.projectlombok:lombok:${version}"
+    testAnnotationProcessor "org.projectlombok:lombok:${version}"
+}
+
+///////////////////
+// Tasks Section //
+///////////////////
+assemble.dependsOn(shadowJar)
+
+jar {
+    enabled false
+}
