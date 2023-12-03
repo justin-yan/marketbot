@@ -1,0 +1,15 @@
+language: scala
+jdk: openjdk8
+scala:
+  - 2.13.1
+addons:
+  sonarcloud:
+    organization: "justin-yan-github"
+script:
+  - sbt clean scalafmtCheckAll coverage test coverageReport
+  - sonar-scanner
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+notifications:
+  email:
+    - justin.yan.public@gmail.com
